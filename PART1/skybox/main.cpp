@@ -1,38 +1,21 @@
-
-/////////////////////////////////////////////////////////
-//NOTE:
-//// move right and left using right and left arrow keys
-//// look up and down using up and down arrow keys
-//// move forward using 'w' key 
-//// move backward using 's' key
-/////////////////////////////////////////////////////////
-
-
-
-////MAKE ZOOM IN AND OUT WORK --make sure I can't zoom in the up/down directions
-//randomly call diff. scenes?
-//change background (image is in folder under "mountains")
-
 #include <iostream>
 #include <cmath>
 #include <iomanip>
 #include <cassert>
 #include <vector>
 using namespace std;
-
 #include "Angel.h";
 #include <GL/glew.h> // for OpenGL extensions
 #include <GL/glut.h> // for Glut utility kit
 #include "texture.h" // for the bitmap texture loader
-
 // Global Projection Matrices
 mat4 projection, modelview, translate;  
-
 #include "GraphicsObject.h"
 #include "SkyBox.h"
 #include "Brick.h"
 #include "tree.h"
 #include "Zebra.h"
+
 
 
 GLfloat  zoom = 0.0;         // Translation factor
@@ -125,6 +108,8 @@ void arrowKey(int key, int x, int y)
 		view = RotateY(5) * view;//rotate eye 5 degrees
 		at = eye + view;
 	}
+
+	cout << "view: " << view << " - eye: " << eye << " - at: " << at << endl;
 	glutPostRedisplay();
 }
 
@@ -141,10 +126,11 @@ void mouse(int btn, int state, int x, int y)
 //	zoom = ( 10.0 / 500.0 ) * y +2.0;  // compute zoom factor 
 //}
 
-GLfloat prev_x, prev_y, x, y;
+GLfloat prev_x, prev_y;
 GLint firsttime = 1;
-GLfloat mousespeed = 0.1;
-void mouse_look(int x, int y) {
+GLfloat mousespeed = 0.3;
+void mouse_look(int x1, int y1) {
+	GLfloat x = (float)x1; GLfloat y = (float)y1;
 	if (firsttime == 1){
 		cout << "mouse_look first time" << endl;
 		prev_x = x;
@@ -153,18 +139,26 @@ void mouse_look(int x, int y) {
 		return;
 	}
 
+
+	GLfloat gww = glutGet(GLUT_WINDOW_WIDTH); GLfloat gwh = glutGet(GLUT_WINDOW_HEIGHT);
 	GLfloat dx = (prev_x - x) * mousespeed;
 	GLfloat dy = (prev_y - y) * mousespeed;
 	cout << "x: " << x << " - y: " << y << " - dx: " << dx << " - dy: " << dy << endl;
 
-	at.x = at.x + (sinf(dx) * cosf(dy));
-	at.y = at.y + sinf(dy);
-	at.z = at.z + (cosf(dx) * cosf(dy));
+	// rotate view horizontally
+	GLfloat prev_aty = at.y;
+	view = RotateY(dx) * view;
+	at = eye + view;
+	at.y = prev_aty;
+
+	// rotate view vertically
+	at.y = at.y + dy;
 
 	prev_x = x;
 	prev_y = y;
-	//glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
+	//glutWarpPointer(gww / 2, gwh / 2);
 
+	cout << "view: " << view << " - eye: " << eye << " - at: " << at << endl;
 	glutPostRedisplay();
 }
 
@@ -174,7 +168,7 @@ void myReshape(int w, int h)
 	aspect =  GLfloat (w) / h;
 }
 
-void key(unsigned char key, int x, int y) //MAKE ZOOM IN AND OUT WORK
+void key(unsigned char key, int x, int y) // w s a d
 {
 	if (key == 'w')//move forward (zoom)
 	{
@@ -186,6 +180,16 @@ void key(unsigned char key, int x, int y) //MAKE ZOOM IN AND OUT WORK
 	{
 		eye = eye - 0.25*view;
 		at = at - 0.25*view;
+	}
+	if (key == 'a') //move left
+	{
+		eye = eye - 0.25*cross(view, up);
+		at = at - 0.25*cross(view, up);
+	}
+	if (key == 'd') //move right
+	{
+		eye = eye + 0.25*cross(view, up);
+		at = at + 0.25*cross(view, up);
 	}
 
     if(key == 'q') exit(0);
@@ -278,14 +282,13 @@ int main(int argc, char **argv)
 	glutSpecialFunc(arrowKey);
 	//glutIdleFunc(arrowKey);       // set in key press
 	//glutMouseFunc(mouse);
-	///glutMotionFunc(mouse_move);   // Called when mouse moves with a mouse button pressed
-	glutPassiveMotionFunc(mouse_look);         // mouse look
+	//glutMotionFunc(mouse_move);   // Called when mouse moves with a mouse button pressed
+	glutPassiveMotionFunc(mouse_look); // mouse look
     glutKeyboardFunc(key);
 
 
 	cout << "*****************************************************" << endl;
-	cout << "*   w moves forward" << endl;
-	cout << "*   s moves backward" << endl;
+	cout << "*   w s a d moves around" << endl;
 	cout << "*   left arrow key rotates view left" << endl;
 	cout << "*   right arrow key rotates view right" << endl;
 	cout << "*****************************************************" << endl;
