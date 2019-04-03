@@ -74,7 +74,6 @@ void display( void )
 	glutPostRedisplay();
 }
 
-
 //void spinCube(int key, int x, int y)
 //{	
 	//if ( axis > -1 )
@@ -86,25 +85,25 @@ void display( void )
 	//}
 //}
 
-void arrowKey(int key, int x, int y)
-{
-	if (key == GLUT_KEY_UP) //look up--doesn't allow you to look past straight up/down (no sommersaults)
-	{
+
+
+/* LOOK / MOVE */
+
+// look around with arrow keys
+void arrowKey(int key, int x, int y) {
+	if (key == GLUT_KEY_UP){ //look up--doesn't allow you to look past straight up/down (no sommersaults)
 		at.y += .5;
 		cout << "at.y: " << at.y << endl;
 	}
-	if (key == GLUT_KEY_DOWN) //look down
-	{
+	if (key == GLUT_KEY_DOWN){ //look down
 		at.y -= .5;
 		cout << "at.y: " << at.y << endl;
 	}
-	if (key == GLUT_KEY_RIGHT) //turn right
-	{
+	if (key == GLUT_KEY_RIGHT){ //turn right
 		view = RotateY(-5) * view;//rotate eye -5 degrees
 		at = eye + view;
 	}
-	if (key == GLUT_KEY_LEFT) //turn left
-	{
+	if (key == GLUT_KEY_LEFT){ //turn left
 		view = RotateY(5) * view;//rotate eye 5 degrees
 		at = eye + view;
 	}
@@ -113,24 +112,13 @@ void arrowKey(int key, int x, int y)
 	glutPostRedisplay();
 }
 
-void mouse(int btn, int state, int x, int y)
-{	
-	if(btn==GLUT_LEFT_BUTTON && state == GLUT_DOWN)	axis = 1;
-	if(btn==GLUT_MIDDLE_BUTTON && state == GLUT_DOWN) axis = 0;
-	if(btn==GLUT_RIGHT_BUTTON && state == GLUT_DOWN) axis = 2;
-	glutPostRedisplay();
-}
-
-//void mouse_move( int x, int y )
-//{
-//	zoom = ( 10.0 / 500.0 ) * y +2.0;  // compute zoom factor 
-//}
-
+// look around with mouse (passive move)
 GLfloat prev_x, prev_y;
 GLint firsttime = 1;
-GLfloat mousespeed = 0.3;
 void mouse_look(int x1, int y1) {
+	GLfloat mousespeed = 0.1;
 	GLfloat x = (float)x1; GLfloat y = (float)y1;
+
 	if (firsttime == 1){
 		cout << "mouse_look first time" << endl;
 		prev_x = x;
@@ -139,7 +127,7 @@ void mouse_look(int x1, int y1) {
 		return;
 	}
 
-
+	// get change in mouse movement
 	GLfloat gww = glutGet(GLUT_WINDOW_WIDTH); GLfloat gwh = glutGet(GLUT_WINDOW_HEIGHT);
 	GLfloat dx = (prev_x - x) * mousespeed;
 	GLfloat dy = (prev_y - y) * mousespeed;
@@ -147,12 +135,12 @@ void mouse_look(int x1, int y1) {
 
 	// rotate view horizontally
 	GLfloat prev_aty = at.y;
-	view = RotateY(dx) * view;
+	view = RotateY(dx*2) * view;
 	at = eye + view;
 	at.y = prev_aty;
 
 	// rotate view vertically
-	at.y = at.y + dy;
+	at.y = at.y + (dy * mousespeed);
 
 	prev_x = x;
 	prev_y = y;
@@ -162,38 +150,49 @@ void mouse_look(int x1, int y1) {
 	glutPostRedisplay();
 }
 
-void myReshape(int w, int h)
-{
-    glViewport(0, 0, w, h);
-	aspect =  GLfloat (w) / h;
-}
-
-void key(unsigned char key, int x, int y) // w s a d
-{
-	if (key == 'w')//move forward (zoom)
-	{
+// move around with  WSAD
+void key(unsigned char key, int x, int y) {
+	if (key == 'w'){   //move forward (zoom)
 		eye = eye + 0.25*view;
 		at = at + 0.25*view;
 	}
 
-	if (key == 's')//move backward (zoom)
-	{
+	if (key == 's'){ //move backward (zoom)
 		eye = eye - 0.25*view;
 		at = at - 0.25*view;
 	}
-	if (key == 'a') //move left
-	{
+	if (key == 'a'){ //move left
 		eye = eye - 0.25*cross(view, up);
 		at = at - 0.25*cross(view, up);
 	}
-	if (key == 'd') //move right
-	{
+	if (key == 'd'){ //move right
 		eye = eye + 0.25*cross(view, up);
 		at = at + 0.25*cross(view, up);
 	}
 
     if(key == 'q') exit(0);
 	glutPostRedisplay();
+}
+
+//void mouse_move( int x, int y )
+//{
+//	zoom = ( 10.0 / 500.0 ) * y +2.0;  // compute zoom factor 
+//}
+
+void mouse(int btn, int state, int x, int y)
+{
+	if (btn == GLUT_LEFT_BUTTON && state == GLUT_DOWN)	axis = 1;
+	if (btn == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN) axis = 0;
+	if (btn == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) axis = 2;
+	glutPostRedisplay();
+}
+
+
+
+void myReshape(int w, int h)
+{
+	glViewport(0, 0, w, h);
+	aspect = GLfloat(w) / h;
 }
 
 void init_gl()
@@ -271,7 +270,7 @@ int main(int argc, char **argv)
 	atexit(OnShutdown);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(500, 500);
+    glutInitWindowSize(1000, 1000);
     glutCreateWindow( "SkyBox" );
 
 
@@ -288,9 +287,9 @@ int main(int argc, char **argv)
 
 
 	cout << "*****************************************************" << endl;
-	cout << "*   w s a d moves around" << endl;
-	cout << "*   left arrow key rotates view left" << endl;
-	cout << "*   right arrow key rotates view right" << endl;
+	cout << "*   w s a d		: moves around" << endl;
+	cout << "*   arrow keys		: look around" << endl;
+	cout << "*   mouse cursor	: look around" << endl;
 	cout << "*****************************************************" << endl;
 
     glutMainLoop();
