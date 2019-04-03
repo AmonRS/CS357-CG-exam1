@@ -15,6 +15,7 @@ point4  skybox_vertices[8] = {
 	point4(0.5,0.5,-0.5, 1.0), 
 	point4(-0.5,0.5,-0.5, 1.0)
 };
+GLint scale = 1000;
 
 class SkyBox : public graphics_object //inherits from graphics_object
 {
@@ -144,7 +145,7 @@ public:
 			
 			// ship down the new the projection and viewing matrices
 
-	        glUniformMatrix4fv(uniforms[0], 1, GL_TRUE, modelview * Scale(50.0, 50.0, 50.0) * RotateZ(theta[2]) * RotateX(theta[0]) * RotateY(theta[1]) );
+	        glUniformMatrix4fv(uniforms[0], 1, GL_TRUE, modelview * Scale(scale, scale, scale) * RotateZ(theta[2]) * RotateX(theta[0]) * RotateY(theta[1]) );
 			GL_CHECK_ERRORS
 	        
 			glUniformMatrix4fv( uniforms[1], 1, GL_TRUE, projection );

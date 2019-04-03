@@ -29,8 +29,6 @@ GLfloat dir = 1.0;
 GLfloat theta[] = {0.0,0.0,0.0};
 GLint axis = 1;
 
-
-
 // THE global SkyBox Object
 SkyBox go_skybox;
 
@@ -42,6 +40,11 @@ Zebra go_zebra_2;
 point4  eye(0.0, 0.0, 1.0, 1.0);
 point4  at(0.0, 0.0, -1.0, 1.0);
 vec4    up(0.0, 1.0, 0.0, 0.0);
+
+
+
+
+
 
 void display( void )
 {
@@ -86,7 +89,7 @@ void display( void )
 //}
 
 
-
+/*******************************************************************************************/
 /* LOOK / MOVE */
 
 // look around with arrow keys
@@ -156,7 +159,6 @@ void key(unsigned char key, int x, int y) {
 		eye = eye + 0.25*view;
 		at = at + 0.25*view;
 	}
-
 	if (key == 's'){ //move backward (zoom)
 		eye = eye - 0.25*view;
 		at = at - 0.25*view;
