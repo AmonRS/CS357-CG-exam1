@@ -134,7 +134,7 @@ void mouse_look(int x1, int y1) {
 	GLfloat gww = glutGet(GLUT_WINDOW_WIDTH); GLfloat gwh = glutGet(GLUT_WINDOW_HEIGHT);
 	GLfloat dx = (prev_x - x) * mousespeed;
 	GLfloat dy = (prev_y - y) * mousespeed;
-	cout << "x: " << x << " - y: " << y << " - dx: " << dx << " - dy: " << dy << endl;
+	//cout << "x: " << x << " - y: " << y << " - dx: " << dx << " - dy: " << dy << endl;
 
 	// rotate view horizontally
 	GLfloat prev_aty = at.y;
@@ -145,11 +145,11 @@ void mouse_look(int x1, int y1) {
 	// rotate view vertically
 	at.y = at.y + (dy * mousespeed);
 
-	prev_x = x;
-	prev_y = y;
-	//glutWarpPointer(gww / 2, gwh / 2);
+	glutWarpPointer(gww / 2, gwh / 2);
+	prev_x = gww / 2;
+	prev_y = gwh / 2;
 
-	cout << "view: " << view << " - eye: " << eye << " - at: " << at << endl;
+	//cout << "view: " << view << " - eye: " << eye << " - at: " << at << endl;
 	glutPostRedisplay();
 }
 
