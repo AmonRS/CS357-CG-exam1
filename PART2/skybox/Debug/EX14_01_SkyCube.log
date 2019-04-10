@@ -13,7 +13,8 @@ z:\cs-357-1-compgraphics\exam1\part2\skybox\tree.h(156): warning C4305: 'argumen
 z:\cs-357-1-compgraphics\exam1\part2\skybox\zebra.h(150): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
 z:\cs-357-1-compgraphics\exam1\part2\skybox\zebra.h(173): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
 z:\cs-357-1-compgraphics\exam1\part2\skybox\main.cpp(26): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
-z:\cs-357-1-compgraphics\exam1\part2\skybox\main.cpp(132): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
-z:\cs-357-1-compgraphics\exam1\part2\skybox\main.cpp(144): warning C4244: 'initializing': conversion from 'int' to 'GLfloat', possible loss of data
-z:\cs-357-1-compgraphics\exam1\part2\skybox\main.cpp(161): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part2\skybox\main.cpp(135): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+z:\cs-357-1-compgraphics\exam1\part2\skybox\main.cpp(147): warning C4244: 'initializing': conversion from 'int' to 'GLfloat', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part2\skybox\main.cpp(164): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part2\skybox\main.cpp(224): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
   EX14_01_SkyCube.vcxproj -> Z:\CS-357-1-CompGraphics\Exam1\PART2\skybox\Debug\EX14_01_SkyCube.exe

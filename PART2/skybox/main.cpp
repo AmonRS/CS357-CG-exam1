@@ -95,18 +95,20 @@ void display( void )
 /* LOOK / MOVE */
 /*******************************************************************************************/
 
-// look around with arrow keys
 void arrowKey(int key, int x, int y) {
+	// look around with arrow keys
+
 	GLfloat prev_aty;
+
 	if (key == GLUT_KEY_UP){ //look up--doesn't allow you to look past straight up/down (no sommersaults)
 		at.y += .5;
 		if (at.y > 20) at.y = 20;
-		//cout << "at.y: " << at.y << endl;
+		///cout << "at.y: " << at.y << endl;
 	}
 	if (key == GLUT_KEY_DOWN){ //look down
 		at.y -= .5;
 		if (at.y < -20) at.y = -20;
-		//cout << "at.y: " << at.y << endl;
+		///cout << "at.y: " << at.y << endl;
 	}
 	if (key == GLUT_KEY_RIGHT){ //turn right
 		prev_aty = at.y;
@@ -121,14 +123,15 @@ void arrowKey(int key, int x, int y) {
 		at.y = prev_aty;
 	}
 
-	//cout << "view: " << view << " - eye: " << eye << " - at: " << at << endl;
+	///cout << "view: " << view << " - eye: " << eye << " - at: " << at << endl;
 	glutPostRedisplay();
 }
 
-// look around with mouse (passive move)
 GLfloat prev_x, prev_y;
 GLint firsttime = 1;
 void mouse_look(int x1, int y1) {
+	// look around with mouse (passive move)
+
 	GLfloat mousespeed = 0.1;
 	GLfloat x = (float)x1; GLfloat y = (float)y1;
 
@@ -144,7 +147,7 @@ void mouse_look(int x1, int y1) {
 	GLfloat gww = glutGet(GLUT_WINDOW_WIDTH); GLfloat gwh = glutGet(GLUT_WINDOW_HEIGHT);
 	GLfloat dx = (prev_x - x) * mousespeed;
 	GLfloat dy = (prev_y - y) * mousespeed;
-	//cout << "x: " << x << " - y: " << y << " - dx: " << dx << " - dy: " << dy << endl;
+	///cout << "x: " << x << " - y: " << y << " - dx: " << dx << " - dy: " << dy << endl;
 
 	// rotate view horizontally
 	GLfloat prev_aty = at.y;
@@ -162,25 +165,31 @@ void mouse_look(int x1, int y1) {
 	prev_x = gww/2;
 	prev_y = gwh/2;
 
-	//cout << "view: " << view << " - eye: " << eye << " - at: " << at << endl;
+	///cout << "view: " << view << " - eye: " << eye << " - at: " << at << endl;
 	glutPostRedisplay();
 }
 
 bool collision_detection(point4 eye1) {
-	//calc. distance between eye and center of object
+	// collision detection
+	// collision detection by invisible sphere around object (brick)
+	
+	// get position of eye and object
 	vec3 pos = go_brick_1.get_position();
 	vec3 eye2 = vec4to3(eye1);
 
+	// calc. distance between eye and object and return if it collides or not.
 	GLfloat dist = sqrtf( pow(pos.x-eye2.x,2) + pow(pos.y - eye2.y,2) + pow(pos.z - eye2.z,2) );
 	if (dist<=1){
-		cout << "collision" << endl;
+		///cout << "collision" << endl;
 		return true;
 	}
 	return false;
 }
 
-// move around with  WSAD
 void key(unsigned char key, int x, int y) {
+	// move around with  WSAD
+	// if no collision if moved, then move
+
 	if (key == 'w'){   //move forward (zoom)
 		if (!collision_detection(eye + 0.25*view)){
 			eye = eye + 0.25*view;
@@ -210,10 +219,10 @@ void key(unsigned char key, int x, int y) {
 	glutPostRedisplay();
 }
 
-//void mouse_move( int x, int y )
-//{
-//	zoom = ( 10.0 / 500.0 ) * y +2.0;  // compute zoom factor 
-//}
+void mouse_move( int x, int y )
+{
+	zoom = ( 10.0 / 500.0 ) * y +2.0;  // compute zoom factor 
+}
 
 void mouse(int btn, int state, int x, int y)
 {
