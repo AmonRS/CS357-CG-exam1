@@ -1,0 +1,18 @@
+﻿  main.cpp
+z:\cs-357-1-compgraphics\exam1\part3\skybox\main.cpp(7): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+z:\cs-357-1-compgraphics\exam1\part3\skybox\angel.h(63): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+z:\cs-357-1-compgraphics\exam1\part3\skybox\mat.h(698): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part3\skybox\mat.h(699): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part3\skybox\mat.h(700): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part3\skybox\mat.h(721): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part3\skybox\mat.h(723): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part3\skybox\mat.h(726): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part3\skybox\mat.h(742): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part3\skybox\skybox.h(148): warning C4244: 'argument': conversion from 'GLint' to 'const GLfloat', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part3\skybox\maze.h(50): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part3\skybox\main.cpp(27): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+z:\cs-357-1-compgraphics\exam1\part3\skybox\main.cpp(140): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+z:\cs-357-1-compgraphics\exam1\part3\skybox\main.cpp(152): warning C4244: 'initializing': conversion from 'int' to 'GLfloat', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part3\skybox\main.cpp(169): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+z:\cs-357-1-compgraphics\exam1\part3\skybox\main.cpp(229): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+  EX14_01_SkyCube.vcxproj -> Z:\CS-357-1-CompGraphics\Exam1\PART3\skybox\Debug\EX14_01_SkyCube.exe
