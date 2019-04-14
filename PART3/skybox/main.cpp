@@ -14,8 +14,6 @@ mat4 projection, modelview, translate;
 #include "SkyBox.h"
 #include "Maze.h"
 #include "Brick.h"
-//#include "tree.h"
-//#include "Zebra.h"
 
 
 
@@ -36,9 +34,6 @@ SkyBox go_skybox;
 Maze go_maze;
 // The objects
 Brick go_brick_1;
-//Brick go_brick_2;
-//tree go_tree_1;
-//Zebra go_zebra_2;
 point4  eye(7.0, 0.0, 1.0, 1.0);
 point4  at(0.0, 0.0, -1.0, 1.0);
 vec4    up(0.0, 1.0, 0.0, 0.0);
@@ -66,14 +61,9 @@ void display( void )
 
 	// tell the bricks to draw themselves and rotate too!
 	go_brick_1.draw( theta, vec3(-4.0,0.0,0.0) );
-   	//go_brick_2.draw( theta, vec3(1.0,0.0,0.0) );
-	//go_zebra_2.draw( theta, vec3(1.0,0.0,0.0) );
 
 	angle += 0.5;
 	if( angle > 360.0 ) angle -= 360.0;
-
-	//go_tree_1.draw( vec3(0.0,angle,0.0), vec3(-1.0,0.0,0.0) );
-
 
 
 	// swap the buffers
@@ -193,7 +183,7 @@ bool collision_detection(point4 eye1) {
 }
 
 void key(unsigned char key, int x, int y) {
-	// move around with  WSAD
+	// move around with  WSADEQ
 	// if no collision if moved, then move
 
 	if (key == 'w'){   //move forward (zoom)
@@ -357,9 +347,10 @@ int main(int argc, char **argv)
 
 
 	cout << "*****************************************************" << endl;
-	cout << "*   w s a d e q		: moves around" << endl;
-	cout << "*   arrow keys			: look around" << endl;
-	cout << "*   mouse cursor		: look around" << endl;
+	cout << "*   w s a d e q		: move around" << endl;
+	cout << "*   p			: exit" << endl;
+	cout << "*   arrow keys		: look around" << endl;
+	cout << "*   mouse cursor	: look around" << endl;
 	cout << "*****************************************************" << endl;
 
 	glutSetCursor(GLUT_CURSOR_CROSSHAIR);

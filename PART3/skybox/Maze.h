@@ -46,16 +46,14 @@ public:
 		if (down == 1) maze_path[r][c].down = 0;
 		if (left == 1) maze_path[r][c].left = 0;
 		if (right == 1) maze_path[r][c].right = 0;
-
-		// info
-		// cout << "cell" << r << c << "up" << maze1[r][c].up << "down" << maze1[r][c].down << "left" << maze1[r][c].left << "right" << maze1[r][c].right << endl;
+		/// cout << "cell" << r << c << "up" << maze1[r][c].up << "down" << maze1[r][c].down << "left" << maze1[r][c].left << "right" << maze1[r][c].right << endl;
 
 		// random possible moves   { up, down, left, right }
 		int moves[4] = { 0,1,2,3 };
 
 		srand( unvisited*time(NULL) );
 		random_shuffle(begin(moves), end(moves));
-		//cout << moves[0] << moves[1] << moves[2] << moves[3] << endl;
+		///cout << moves[0] << moves[1] << moves[2] << moves[3] << endl;
 
 		for (int i = 0; i <= 3; i++){
 			if (moves[i]==0){			//up
@@ -135,33 +133,35 @@ public:
 				}
 			}
 		}
+		cout << "wall count 2 : " << wallcount << endl;
 	}
 
 	void draw(GLfloat theta[]) {
-		//cout << "maze.draw()" << endl;
 		// draw 240 bricks
 
-		//wall_list[0].brickk->draw(theta, vec3(6.0, 0.0, 0.0));
+		///wall_list[0].brickk->draw(theta, vec3(6.0, 0.0, 0.0));
 
-		for (int i = 0; i < 150; i++){
-			//go_brick_1.draw(theta, vec3(-4.0, 0.0, 0.0));
-			//wall_list[i].brickk->draw(theta, wall_list[i].loc);
+		for (int i = 0; i < 188; i++){
+			///go_brick_1.draw(theta, vec3(-4.0, 0.0, 0.0));
 			wall_list[i].brickk->draw(theta, wall_list[i].loc);
 		}
 	}
 
 	void init() {
-		for (int i = 0; i < 150; i++){
+		cout << "init brick ";
+		for (int i = 0; i < 188; i++){
+			cout << i << "   ";
 			wall_list[i].brickk->init_data();
 			wall_list[i].brickk->init_VAO();
 			wall_list[i].brickk->init_VBO();
 			wall_list[i].brickk->init_shader();
 			wall_list[i].brickk->init_texture_map();
 		}
+		cout << endl;
 	}
 
 	void cleanup() {
-		for (int i = 0; i < 240; i++) {
+		for (int i = 0; i < wall_list.size(); i++) {
 			wall_list[i].brickk->cleanup();
 		}
 	}
@@ -190,7 +190,7 @@ public:
 			}
 			cout << endl;
 		}
-		cout << "wall count: " << wallscount << endl;
+		///cout << "wall count: " << wallscount << endl;
 	}
 
 
