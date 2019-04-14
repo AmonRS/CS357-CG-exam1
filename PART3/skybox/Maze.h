@@ -143,7 +143,7 @@ public:
 
 		//wall_list[0].brickk->draw(theta, vec3(6.0, 0.0, 0.0));
 
-		for (int i = 0; i < 100; i++){
+		for (int i = 0; i < 150; i++){
 			//go_brick_1.draw(theta, vec3(-4.0, 0.0, 0.0));
 			//wall_list[i].brickk->draw(theta, wall_list[i].loc);
 			wall_list[i].brickk->draw(theta, wall_list[i].loc);
@@ -151,7 +151,7 @@ public:
 	}
 
 	void init() {
-		for (int i = 0; i < 100; i++){
+		for (int i = 0; i < 150; i++){
 			wall_list[i].brickk->init_data();
 			wall_list[i].brickk->init_VAO();
 			wall_list[i].brickk->init_VBO();

@@ -357,9 +357,9 @@ int main(int argc, char **argv)
 
 
 	cout << "*****************************************************" << endl;
-	cout << "*   w s a d e q	: moves around" << endl;
-	cout << "*   arrow keys		: look around" << endl;
-	cout << "*   mouse cursor	: look around" << endl;
+	cout << "*   w s a d e q		: moves around" << endl;
+	cout << "*   arrow keys			: look around" << endl;
+	cout << "*   mouse cursor		: look around" << endl;
 	cout << "*****************************************************" << endl;
 
 	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
