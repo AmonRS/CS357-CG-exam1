@@ -60,8 +60,9 @@ void display( void )
 	// tell the skybox to draw its vertex
 	go_skybox.draw( theta );
 
-	
-	// maze.draw()
+	// draw the maze
+	go_maze.draw( theta );
+	//go_maze.wall_list[0].brickk->draw(theta, vec3(3.0, 0.0, 0.0));
 
 	// tell the bricks to draw themselves and rotate too!
 	go_brick_1.draw( theta, vec3(-4.0,0.0,0.0) );
@@ -219,8 +220,20 @@ void key(unsigned char key, int x, int y) {
 			at = at + 0.25*cross(view, up);
 		}
 	}
+	if (key == 'e') { //move up
+		if (!collision_detection(eye + 0.25*cross(view, up))) {
+			eye = eye + 0.25*up;
+			at = at + 0.25*up;
+		}
+	}
+	if (key == 'q') { //move up
+		if (!collision_detection(eye + 0.25*cross(view, up))) {
+			eye = eye - 0.25*up;
+			at = at - 0.25*up;
+		}
+	}
 
-    if(key == 'q') exit(0);
+    if(key == 'p') exit(0);
 	glutPostRedisplay();
 }
 
@@ -268,6 +281,8 @@ void init()
 	go_brick_1.init_shader();		// Initialize the shader objects and textures for skybox
 	go_brick_1.init_texture_map();	// Initialize the texture map for this object
 
+	go_maze.init();
+
 	//go_brick_2.init_data();	        // Setup the data for the skybox object
 	//go_brick_2.init_VAO();          // Initialize the vertex array object for this object
 	//go_brick_2.init_VBO();			// Initialize the data buffers for this object
@@ -295,6 +310,7 @@ void init()
 void OnShutdown()
 {
 	go_skybox.cleanup(); // release the textures on the graphics card
+	go_maze.cleanup();
 }
 
 void checkGlew()
@@ -322,11 +338,10 @@ int main(int argc, char **argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(1000, 1000);
-    //glutCreateWindow( "SkyBox" );
+    glutCreateWindow( "SkyBox" );
 
 
-	go_maze.generate_maze(0, 0, 0,0,0,0);
-	go_maze.print_maze();
+	go_maze.generate_maze();
 
 
 	checkGlew();
@@ -342,7 +357,7 @@ int main(int argc, char **argv)
 
 
 	cout << "*****************************************************" << endl;
-	cout << "*   w s a d		: moves around" << endl;
+	cout << "*   w s a d e q	: moves around" << endl;
 	cout << "*   arrow keys		: look around" << endl;
 	cout << "*   mouse cursor	: look around" << endl;
 	cout << "*****************************************************" << endl;

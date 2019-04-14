@@ -15,11 +15,14 @@ point4  brick_vertices[8] = {
 	point4(0.5,0.5,-0.5, 1.0), 
 	point4(-0.5,0.5,-0.5, 1.0)
 };
-vec3 pos;
+
 
 class Brick : public graphics_object
 {
 public:
+	vec3 pos;
+	GLfloat scale = 1.0;
+
 	Brick() : graphics_object("SkyCube") {}
 	
 	void triangle( unsigned int a, unsigned int b, unsigned int c )
@@ -152,7 +155,7 @@ public:
 		start_shader();
 			
 			// ship down the new the projection and viewing matrices
-	        glUniformMatrix4fv(uniforms[2], 1, GL_TRUE, modelview * Translate(translate) * Scale(0.5,0.5,0.5) * RotateZ(theta[0]) * RotateX(theta[1]) * RotateY(theta[1]) );
+	        glUniformMatrix4fv(uniforms[2], 1, GL_TRUE, modelview * Translate(translate) * Scale(scale, scale, scale) * RotateZ(theta[0]) * RotateX(theta[1]) * RotateY(theta[1]) );
 			GL_CHECK_ERRORS
 	        
 			glUniformMatrix4fv( uniforms[3], 1, GL_TRUE, projection );
