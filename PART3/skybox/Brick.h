@@ -20,8 +20,8 @@ point4  brick_vertices[8] = {
 class Brick : public graphics_object
 {
 public:
-	vec3 pos;
-	GLfloat scale = 1.0;
+	vec3 pos;				// position of the brick inside the skybox
+	GLfloat scale = 3.0;	// size scaling of brick
 
 	Brick() : graphics_object("SkyCube") {}
 	
@@ -177,6 +177,23 @@ public:
 
 	vec3 get_position() {
 		return pos;
+	}
+
+	bool collision_detection(point4 eye1) {
+		// collision detection
+		// collision detection by invisible sphere around object (brick)
+
+		// get position of eye and object
+		vec3 pos = get_position();
+		vec3 eye2 = vec4to3(eye1);
+
+		// calc. distance between eye and object and return if it collides or not.
+		GLfloat dist = sqrtf(pow(pos.x - eye2.x, 2) + pow(pos.y - eye2.y, 2) + pow(pos.z - eye2.z, 2));
+		if (dist <= 1) {
+			///cout << "collision" << endl;
+			return true;
+		}
+		return false;
 	}
 
 

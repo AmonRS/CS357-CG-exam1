@@ -14,6 +14,7 @@ mat4 projection, modelview, translate;
 #include "SkyBox.h"
 #include "Maze.h"
 #include "Brick.h"
+#include "Tree.h"
 
 
 
@@ -34,7 +35,7 @@ SkyBox go_skybox;
 Maze go_maze;
 // The objects
 Brick go_brick_1;
-point4  eye(7.0, 0.0, 1.0, 1.0);
+point4  eye(100.0, 0.0, 1.0, 1.0);
 point4  at(0.0, 0.0, -1.0, 1.0);
 vec4    up(0.0, 1.0, 0.0, 0.0);
 
@@ -57,7 +58,6 @@ void display( void )
 
 	// draw the maze
 	go_maze.draw( theta );
-	//go_maze.wall_list[0].brickk->draw(theta, vec3(3.0, 0.0, 0.0));
 
 	// tell the bricks to draw themselves and rotate too!
 	go_brick_1.draw( theta, vec3(-4.0,0.0,0.0) );
@@ -98,12 +98,12 @@ void arrowKey(int key, int x, int y) {
 
 	if (key == GLUT_KEY_UP){ //look up--doesn't allow you to look past straight up/down (no sommersaults)
 		at.y += .5;
-		if (at.y > 20) at.y = 20;
+		if (at.y > eye.y +5) at.y = eye.y +5;
 		///cout << "at.y: " << at.y << endl;
 	}
 	if (key == GLUT_KEY_DOWN){ //look down
 		at.y -= .5;
-		if (at.y < -20) at.y = -20;
+		if (at.y < eye.y -5) at.y = eye.y -5;
 		///cout << "at.y: " << at.y << endl;
 	}
 	if (key == GLUT_KEY_RIGHT){ //turn right
@@ -132,7 +132,7 @@ void mouse_look(int x1, int y1) {
 	GLfloat x = (float)x1; GLfloat y = (float)y1;
 
 	if (firsttime == 1){
-		cout << "mouse_look first time" << endl;
+		///cout << "mouse_look first time" << endl;
 		prev_x = x;
 		prev_y = y;
 		firsttime = 0;
@@ -153,8 +153,9 @@ void mouse_look(int x1, int y1) {
 
 	// rotate view vertically
 	at.y = at.y + (dy * mousespeed);
-	if (at.y > 20) at.y = 20;
-	if (at.y < -20) at.y = -20;
+	if (at.y > eye.y +5) at.y = eye.y +5;
+	if (at.y < eye.y -5) at.y = eye.y -5;
+	cout << at.y << endl;
 
 
 	glutWarpPointer(gww / 2, gwh / 2);
@@ -169,16 +170,13 @@ bool collision_detection(point4 eye1) {
 	// collision detection
 	// collision detection by invisible sphere around object (brick)
 	
-	// get position of eye and object
-	vec3 pos = go_brick_1.get_position();
-	vec3 eye2 = vec4to3(eye1);
-
-	// calc. distance between eye and object and return if it collides or not.
-	GLfloat dist = sqrtf( pow(pos.x-eye2.x,2) + pow(pos.y - eye2.y,2) + pow(pos.z - eye2.z,2) );
-	if (dist<=1){
-		///cout << "collision" << endl;
+	if (go_brick_1.collision_detection(eye1) == true){
 		return true;
 	}
+	if (go_maze.collision_detection(eye1) == true) {
+		return true;
+	}
+
 	return false;
 }
 
@@ -211,13 +209,13 @@ void key(unsigned char key, int x, int y) {
 		}
 	}
 	if (key == 'e') { //move up
-		if (!collision_detection(eye + 0.25*cross(view, up))) {
+		if (!collision_detection(eye + 0.25*up)) {
 			eye = eye + 0.25*up;
 			at = at + 0.25*up;
 		}
 	}
 	if (key == 'q') { //move up
-		if (!collision_detection(eye + 0.25*cross(view, up))) {
+		if (!collision_detection(eye + 0.25*up)) {
 			eye = eye - 0.25*up;
 			at = at - 0.25*up;
 		}
@@ -271,25 +269,8 @@ void init()
 	go_brick_1.init_shader();		// Initialize the shader objects and textures for skybox
 	go_brick_1.init_texture_map();	// Initialize the texture map for this object
 
-	go_maze.init();
 
-	//go_brick_2.init_data();	        // Setup the data for the skybox object
-	//go_brick_2.init_VAO();          // Initialize the vertex array object for this object
-	//go_brick_2.init_VBO();			// Initialize the data buffers for this object
-	//go_brick_2.init_shader();		// Initialize the shader objects and textures for skybox
-	//go_brick_2.init_texture_map();	// Initialize the texture map for this object
-	
-	//go_tree_1.init_data();	    // Setup the data for the skybox object
-	//go_tree_1.init_VAO();        // Initialize the vertex array object for this object
-	//go_tree_1.init_VBO();		// Initialize the data buffers for this object
-	//go_tree_1.init_shader();		// Initialize the shader objects and textures for skybox
-	//go_tree_1.init_texture_map();// Initialize the texture map for this object
-
-	//go_zebra_2.init_data();	        // Setup the data for the skybox object
-	//go_zebra_2.init_VAO();          // Initialize the vertex array object for this object
-	//go_zebra_2.init_VBO();			// Initialize the data buffers for this object
-	//go_zebra_2.init_shader();		// Initialize the shader objects and textures for skybox
-	//go_zebra_2.init_texture_map();	// Initialize the texture map for this object
+	go_maze.init();					// set up the maze
 
 	view = RotateY(15) * view;//rotate eye 30 degrees
 	at = eye + view;
@@ -301,6 +282,7 @@ void OnShutdown()
 {
 	go_skybox.cleanup(); // release the textures on the graphics card
 	go_maze.cleanup();
+	go_brick_1.cleanup();
 }
 
 void checkGlew()

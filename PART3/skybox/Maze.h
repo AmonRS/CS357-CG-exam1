@@ -24,11 +24,11 @@ public:
 	int unvisited = 100;
 	int cc = 0;
 
+	Brick brickk;				// ^ one brick for all ^   :)
 	struct wall {
-		Brick* brickk;
 		vec3 loc;
 	};
-	vector<wall> wall_list;		// list of wall bricks
+	vector<wall> wall_list;		// list of wall locations
 
 	Maze() {
 		cout << "maze started" << endl;
@@ -38,6 +38,7 @@ public:
 
 
 	void generate_maze_path(int r, int c, int up, int down, int left, int right) {
+		// recursive random maze path generator
 
 		// visited
 		maze_path[r][c].visited = cc++;
@@ -85,7 +86,9 @@ public:
 	}
 
 	void generate_maze_walls() {
-		// build all walls
+		// build walls around the maze path
+
+		// build all walls in every space
 		for (int r = 0; r < 21; r++){
 			for (int c = 0; c < 21; c++){
 				maze_walls[r][c] = 1;
@@ -127,8 +130,8 @@ public:
 		for (int r = 0; r < 21; r++) {
 			for (int c = 0; c < 21; c++) {
 				if (maze_walls[r][c] == 1) {
-					wall_list[wallcount].brickk = new Brick;
-					wall_list[wallcount].loc = vec3(r, 0.0, c);
+					//wall_list[wallcount].brickk = new Brick;
+					wall_list[wallcount].loc = vec3(r*3, 0.0, c*3);
 					wallcount++;
 				}
 			}
@@ -141,29 +144,43 @@ public:
 
 		///wall_list[0].brickk->draw(theta, vec3(6.0, 0.0, 0.0));
 
-		for (int i = 0; i < 188; i++){
-			///go_brick_1.draw(theta, vec3(-4.0, 0.0, 0.0));
-			wall_list[i].brickk->draw(theta, wall_list[i].loc);
+		for (int i = 0; i < 240; i++){
+			///wall_list[i].brickk->draw(theta, wall_list[i].loc);
+			brickk.draw(theta, wall_list[i].loc);
 		}
+	}
+
+	bool collision_detection(point4 eye1) {
+		// collision detection
+		// collision detection by invisible sphere around bricks in the maze
+
+		vec3 eye2 = vec4to3(eye1);
+
+		for (int i = 0; i < wall_list.size(); i++)
+		{
+			// get position of brick
+			vec3 pos = wall_list[i].loc;
+			
+			// calc. distance between eye and object and return if it collides or not.
+			GLfloat dist = sqrtf(pow(pos.x - eye2.x, 2) + pow(pos.y - eye2.y, 2) + pow(pos.z - eye2.z, 2));
+			if (dist <= 2.5) {
+				///cout << "collision" << endl;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void init() {
-		cout << "init brick ";
-		for (int i = 0; i < 188; i++){
-			cout << i << "   ";
-			wall_list[i].brickk->init_data();
-			wall_list[i].brickk->init_VAO();
-			wall_list[i].brickk->init_VBO();
-			wall_list[i].brickk->init_shader();
-			wall_list[i].brickk->init_texture_map();
-		}
-		cout << endl;
+		brickk.init_data();
+		brickk.init_VAO();
+		brickk.init_VBO();
+		brickk.init_shader();
+		brickk.init_texture_map();
 	}
 
 	void cleanup() {
-		for (int i = 0; i < wall_list.size(); i++) {
-			wall_list[i].brickk->cleanup();
-		}
+		brickk.cleanup();
 	}
 
 	void print_maze_path() {
@@ -176,13 +193,13 @@ public:
 	}
 	void print_maze_walls() {
 		char ch = 178;
-		int wallscount = 0;
+		///int wallscount = 0;
 
 		for (int r = 0; r < 21; r++) {
 			for (int c = 0; c < 21; c++) {
 				if (maze_walls[r][c]==1) {
 					cout << ch;
-					wallscount++;
+					///wallscount++;
 				}
 				else{
 					cout << " ";

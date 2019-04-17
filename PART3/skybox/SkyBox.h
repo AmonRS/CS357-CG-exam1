@@ -15,6 +15,7 @@ point4  skybox_vertices[8] = {
 	point4(0.5,0.5,-0.5, 1.0), 
 	point4(-0.5,0.5,-0.5, 1.0)
 };
+// skybox scaling
 GLint scale = 1000;
 
 class SkyBox : public graphics_object //inherits from graphics_object

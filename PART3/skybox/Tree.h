@@ -128,7 +128,7 @@ public:
 		glActiveTexture(this_texture);
 		glGenTextures(1, &tex);
 		glBindTexture(GL_TEXTURE_2D, tex);
-		int TreeTex = MyLoadBitmap("trees.bmp", GL_TEXTURE_2D, true);
+		int TreeTex = MyLoadBitmap("Brick\\ground.bmp", GL_TEXTURE_2D, true);
 		GL_CHECK_ERRORS
 
 		texMapLocation = glGetUniformLocation(program, "texMap");
