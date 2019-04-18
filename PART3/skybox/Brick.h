@@ -116,12 +116,12 @@ public:
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-		int TexRight = MyLoadCubeMapBitmap("Brick\\brick2.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_X);
-		int TexLeft = MyLoadCubeMapBitmap("Brick\\brick2.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_X);
-		int TexTop = MyLoadCubeMapBitmap("Brick\\brick2.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_Y);
-		int TexBottom = MyLoadCubeMapBitmap("Brick\\brick2.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_Y);
-		int TexFront = MyLoadCubeMapBitmap("Brick\\brick2.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_Z);
-		int TexBack = MyLoadCubeMapBitmap("Brick\\brick2.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_Z);
+		int TexRight = MyLoadCubeMapBitmap("Brick\\sfi.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_X);
+		int TexLeft = MyLoadCubeMapBitmap("Brick\\sfi.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_X);
+		int TexTop = MyLoadCubeMapBitmap("Brick\\sfi.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_Y);
+		int TexBottom = MyLoadCubeMapBitmap("Brick\\sfi.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_Y);
+		int TexFront = MyLoadCubeMapBitmap("Brick\\sfi.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_Z);
+		int TexBack = MyLoadCubeMapBitmap("Brick\\sfi.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_Z);
 
 		texMapLocation = glGetUniformLocation(program, "texMap");
 		glUniform1i(texMapLocation, tex);

@@ -110,13 +110,19 @@ public:
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-		int TexRight = MyLoadCubeMapBitmap("skybox\\ww_r.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_X);
+		int TexRight = MyLoadCubeMapBitmap("skybox\\aaa.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_X);
+		int TexLeft = MyLoadCubeMapBitmap("skybox\\aaa.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_X);
+		int TexTop = MyLoadCubeMapBitmap("skybox\\aaa.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_Y);
+		int TexBottom = MyLoadCubeMapBitmap("skybox\\aaa.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_Y);
+		int TexFront = MyLoadCubeMapBitmap("skybox\\aaa.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_Z);
+		int TexBack = MyLoadCubeMapBitmap("skybox\\aaa.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_Z);
+		/*int TexRight = MyLoadCubeMapBitmap("skybox\\ww_r.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_X);
 		int TexLeft = MyLoadCubeMapBitmap("skybox\\ww_l.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_X);
 		int TexTop = MyLoadCubeMapBitmap("skybox\\ww_u.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_Y);
-		int TexBottom = MyLoadCubeMapBitmap("skybox\\ww_d.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_Y);
+		int TexBottom = MyLoadCubeMapBitmap("Brick\\ground.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_Y);
 		int TexFront = MyLoadCubeMapBitmap("skybox\\ww_f.bmp", GL_TEXTURE_CUBE_MAP_POSITIVE_Z);
 		int TexBack = MyLoadCubeMapBitmap("skybox\\ww_b.bmp", GL_TEXTURE_CUBE_MAP_NEGATIVE_Z);
-
+*/
 		texMapLocation = glGetUniformLocation(program, "texMap");
 		glUniform1i(texMapLocation, tex);
 

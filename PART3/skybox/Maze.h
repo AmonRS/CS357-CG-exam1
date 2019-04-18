@@ -121,7 +121,8 @@ public:
 		// generate maze path and maze walls
 		generate_maze_path(0, 0, 0, 0, 0, 0);
 		generate_maze_walls();
-		print_maze_walls();
+		//print_maze_path();
+		//print_maze_walls();
 
 		// add walls to wall_list
 		wall_list.resize(240);

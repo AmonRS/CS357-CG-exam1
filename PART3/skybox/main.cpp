@@ -31,11 +31,12 @@ GLint axis = 1;
 
 // THE global SkyBox Object
 SkyBox go_skybox;
+SkyBox go_skybox_2;
 //maze
 Maze go_maze;
 // The objects
 Brick go_brick_1;
-point4  eye(100.0, 0.0, 1.0, 1.0);
+point4  eye(90.0, 0.0, 104.0, 1.0);
 point4  at(0.0, 0.0, -1.0, 1.0);
 vec4    up(0.0, 1.0, 0.0, 0.0);
 
@@ -155,7 +156,7 @@ void mouse_look(int x1, int y1) {
 	at.y = at.y + (dy * mousespeed);
 	if (at.y > eye.y +5) at.y = eye.y +5;
 	if (at.y < eye.y -5) at.y = eye.y -5;
-	cout << at.y << endl;
+	///cout << at.y << endl;
 
 
 	glutWarpPointer(gww / 2, gwh / 2);
